@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>AI Vehicle Prediction System</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <style>
+        body {
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: #fff;
+        }
+
+        .navbar {
+            padding: 15px 40px;
+        }
+
+        .hero {
+            padding: 100px 0;
+        }
+
+        .hero-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+        }
+
+        .hero img {
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+        }
+
+        .btn-custom {
+            background: #00c6ff;
+            border: none;
+            padding: 12px 25px;
+            font-weight: bold;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+
+        .btn-custom:hover {
+            background: #0072ff;
+            transform: translateY(-2px);
+        }
+
+        .about-section {
+            padding: 80px 0;
+        }
+
+        .about-card {
+            background: rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            transition: 0.3s;
+        }
+
+        .about-card:hover {
+            transform: translateY(-8px);
+        }
+
+        h1, h2, h4 {
+            font-weight: 600;
+        }
+
+        hr {
+            background: #00c6ff;
+            height: 2px;
+            width: 120px;
+        }
+        .footer-link {
+            color: #ccc;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        
+        .footer-link:hover {
+            color: #00c6ff;
+            text-decoration: none;
+        }
+        
+        .social-icon {
+            font-size: 18px;
+            margin-right: 12px;
+            color: #ccc;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+        
+        .social-icon:hover {
+            color: #00c6ff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 🔵 NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+        <a class="navbar-brand font-weight-bold" href="/">🚗 AI Vehicle System</a>
+    
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+    
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+    
+                <li class="nav-item">
+                    <a class="nav-link" href="/predict">Fuel Prediction</a>
+                </li>
+    
+                <li class="nav-item">
+                    <a class="nav-link" href="/car_predict">Car Price</a>
+                </li>
+    
+                {% if current_user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signup">Signup</a>
+                    </li>
+                {% endif %}
+    
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- 🔵 HERO SECTION -->
+    <div class="container hero">
+        <div class="row align-items-center">
+    
+            <div class="col-md-6">
+                <div class="hero-card">
+                    <h1>AI-Based Vehicle Prediction System</h1>
+                    <p class="lead mt-4">
+                        Make smarter automotive decisions using AI-powered predictions.
+                        Estimate fuel efficiency and used car prices instantly.
+                    </p>
+    
+                    <a href="/predict" class="btn btn-custom mt-3 mr-3">
+                        Fuel Efficiency
+                    </a>
+    
+                    <a href="/car_predict" class="btn btn-custom mt-3">
+                        Car Price
+                    </a>
+                </div>
+            </div>
+    
+            <div class="col-md-6 text-center">
+                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70"
+                    alt="Car Image">
+            </div>
+    
+        </div>
+    </div>
+    
+    
+    
+    <!-- 🔵 ABOUT SECTION -->
+<div class="about-section text-center">
+    <div class="container">
+
+        <h2 class="mb-4">Why This Project Matters</h2>
+        <hr class="mx-auto mb-5">
+
+        <div class="row">
+
+            <!-- Problem -->
+            <div class="col-md-4 mb-4">
+                <div class="about-card p-4 h-100">
+                    <h4>🚘 The Problem</h4>
+                    <p class="mt-3">
+                        Buyers and sellers often lack accurate data about
+                        fuel efficiency and fair car pricing.
+                        Decisions are made based on guesswork.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Solution -->
+            <div class="col-md-4 mb-4">
+                <div class="about-card p-4 h-100">
+                    <h4>🧠 The Solution</h4>
+                    <p class="mt-3">
+                        This platform uses Machine Learning models —
+                        an Artificial Neural Network and a Regression model —
+                        to generate real-time, data-driven predictions.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Impact -->
+            <div class="col-md-4 mb-4">
+                <div class="about-card p-4 h-100">
+                    <h4>📈 The Impact</h4>
+                    <p class="mt-3">
+                        Users can compare fuel performance before purchase
+                        and estimate used car prices accurately,
+                        enabling smarter financial decisions.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Tech Stack Section -->
+        <div class="mt-5">
+            <h4 class="mb-3">⚙️ Technology Stack</h4>
+            <p>
+                Flask • TensorFlow • Keras • Scikit-Learn • SQLAlchemy • Bootstrap
+            </p>
+        </div>
+
+    </div>
+</div>
+    <!-- 🔵 FEATURE CARDS -->
+    <div class="container text-center mt-5">
+        <div class="row justify-content-center">
+    
+            <!-- Fuel Card -->
+            <div class="col-md-5 mb-4">
+                <a href="/predict" style="text-decoration:none; color:inherit;">
+                    <div class="about-card p-4">
+                        <h4>🚗 Fuel Efficiency Prediction</h4>
+                        
+                        <hr style="background:#00c6ff; height:1px;">
+    
+                        <p><b>📥 Inputs:</b></p>
+                        <p style="font-size:14px;">
+                            Cylinders, Displacement, Horsepower, Weight,
+                            Acceleration, Model Year, Origin
+                        </p>
+    
+                        <p class="mt-3"><b>📤 Output:</b></p>
+                        <p style="font-size:14px;">
+                            Predicted Fuel Efficiency (MPG)
+                        </p>
+    
+                        <div class="mt-3 text-info font-weight-bold">
+                            ➜ Click to Try
+                        </div>
+                    </div>
+                </a>
+            </div>
+    
+            <!-- Car Price Card -->
+            <div class="col-md-5 mb-4">
+                <a href="/car_predict" style="text-decoration:none; color:inherit;">
+                    <div class="about-card p-4">
+                        <h4>💰 Car Price Prediction</h4>
+    
+                        <hr style="background:#00c6ff; height:1px;">
+    
+                        <p><b>📥 Inputs:</b></p>
+                        <p style="font-size:14px;">
+                            Company, Model, Year,
+                            Fuel Type, Kilometers Driven
+                        </p>
+    
+                        <p class="mt-3"><b>📤 Output:</b></p>
+                        <p style="font-size:14px;">
+                            Estimated Market Price (₹)
+                        </p>
+    
+                        <div class="mt-3 text-info font-weight-bold">
+                            ➜ Click to Try
+                        </div>
+                    </div>
+                </a>
+            </div>
+    
+        </div>
+    </div>
+    </div>
+    <!-- 🔵 FOOTER -->
+
+<footer style="background: linear-gradient(to right, #0f2027, #203a43); padding:60px 0; margin-top:80px;">
+
+    <div class="container">
+
+        <div class="row">
+
+            <!-- Project Info -->
+            <div class="col-md-4 mb-4">
+                <h5 class="text-info font-weight-bold">🚗 AI Vehicle Prediction System</h5>
+                <p style="font-size:14px; color:#ccc; line-height:1.7;">
+                    Intelligent vehicle analytics powered by Machine Learning.
+                </p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-md-4 mb-4">
+                <h5 class="text-info font-weight-bold">Navigation</h5>
+                <ul style="list-style:none; padding:0; font-size:14px; line-height:2;">
+                    <li><a href="/" class="footer-link">Home</a></li>
+                    <li><a href="/predict" class="footer-link">Fuel Prediction</a></li>
+                    <li><a href="/car_predict" class="footer-link">Car Price</a></li>
+                    {% if current_user.is_authenticated %}
+                        <li><a href="/logout" class="footer-link">Logout</a></li>
+                    {% else %}
+                        <li><a href="/login" class="footer-link">Login</a></li>
+                        <li><a href="/signup" class="footer-link">Signup</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <!-- Tech Stack + Social -->
+            <div class="col-md-4 mb-4">
+                <h5 class="text-info font-weight-bold">Technology</h5>
+                <p style="font-size:14px; color:#ccc;">
+                    Flask • TensorFlow • Keras • Scikit-Learn • SQLAlchemy • Bootstrap
+                </p>
+
+                <div class="mt-3">
+                    <a href="#" class="social-icon">🔗</a>
+                    <a href="#" class="social-icon">💼</a>
+                    <a href="#" class="social-icon">📧</a>
+                </div>
+            </div>
+
+        </div>
+
+        <hr style="background:#1f3a47; margin-top:30px;">
+
+        <div class="text-center" style="font-size:13px; color:#aaa;">
+            © <span id="year"></span> AI Vehicle Prediction System | Developed by Gopi
+        </div>
+
+    </div>
+
+</footer>
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    
+    </body>
+</html>

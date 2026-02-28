@@ -1,0 +1,226 @@
+
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <title>Fuel Efficiency Prediction</title>
+
+    <style>
+        body {
+            background-color: #626269;
+        }
+
+        .col-lg-4 {
+            color: #ffffff;
+        }
+
+        #resultBox {
+            background: #343a40;
+            border-radius: 10px;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body style="background: linear-gradient(to right, #1f4037, #99f2c8); min-height:100vh;">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+        <a class="navbar-brand font-weight-bold" href="/">Fuel Efficiency</a>
+    
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+    
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="/">Home</a>
+                </li>
+    
+                {% if current_user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/car_predict">Car Price</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/logout">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/signup">Signup</a>
+                    </li>
+                {% endif %}
+    
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container mt-5">
+    
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+    
+                <div class="card shadow-lg border-0 rounded-lg">
+                    <div class="card-header text-center bg-success text-white">
+                        <h3 class="mb-0">🚗 Fuel Efficiency Prediction</h3>
+                    </div>
+    
+                    <div class="card-body p-4">
+    
+                        <form id="predictionForm">
+    
+                            <div class="form-group">
+                                <label>Cylinders</label>
+                                <select name="cylinders" class="form-control" required>
+                                    <option value="">Select</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="8">8</option>
+                                </select>
+                            </div>
+    
+                            <div class="form-group">
+                                <label>Displacement</label>
+                                <input type="number" step="any"
+                                    class="form-control"
+                                    name="displacement"
+                                    placeholder="50 - 600"
+                                    required>
+                            </div>
+    
+                            <div class="form-group">
+                                <label>Horsepower</label>
+                                <input type="number" step="any"
+                                    class="form-control"
+                                    name="horsepower"
+                                    placeholder="40 - 500"
+                                    required>
+                            </div>
+    
+                            <div class="form-group">
+                                <label>Weight</label>
+                                <input type="number" step="any"
+                                    class="form-control"
+                                    name="weight"
+                                    placeholder="1000 - 7000"
+                                    required>
+                            </div>
+    
+                            <div class="form-group">
+                                <label>Acceleration (seconds)</label>
+                                <input type="number" step="any"
+                                    class="form-control"
+                                    name="acceleration"
+                                    placeholder="5 - 30"
+                                    required>
+                            </div>
+    
+                            <div class="form-group">
+                                <label>Model Year</label>
+                                <input type="number"
+                                    class="form-control"
+                                    name="model_year"
+                                    placeholder="70 - 99"
+                                    required>
+                            </div>
+    
+                            <div class="form-group">
+                                <label>Origin (1-USA, 2-Europe, 3-Japan)</label>
+                                <input type="number"
+                                    class="form-control"
+                                    name="origin"
+                                    placeholder="1 - 3"
+                                    required>
+                            </div>
+    
+                            <div class="text-center mt-4">
+                                <button type="submit"
+                                        class="btn btn-success btn-lg btn-block">
+                                    Predict Fuel Efficiency
+                                </button>
+                            </div>
+    
+                            <div id="resultBox"
+                                 class="text-center mt-4 p-3 rounded"
+                                 style="background:#343a40; color:white; font-size:18px;">
+                            </div>
+    
+                        </form>
+    
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    
+    </div>
+
+    <!-- AJAX Script -->
+    <script>
+        function showHome() {
+            document.getElementById("homeSection").style.display = "block";
+            document.getElementById("aboutSection").style.display = "none";
+        }
+        
+        function showAbout() {
+            document.getElementById("homeSection").style.display = "none";
+            document.getElementById("aboutSection").style.display = "block";
+        }
+        
+        document.addEventListener("DOMContentLoaded", function () {
+        
+            document.getElementById("predictionForm")
+                .addEventListener("submit", function (e) {
+        
+                    e.preventDefault();
+        
+                    let resultBox = document.getElementById("resultBox");
+        
+                    // 🔄 Show Predicting message
+                    resultBox.innerHTML = "⏳ Predicting Fuel Efficiency...";
+                    resultBox.style.background = "#343a40";
+                    resultBox.style.color = "white";
+        
+                    let formData = new FormData(this);
+        
+                    fetch("/result", {
+                        method: "POST",
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+        
+                        if (data.error) {
+                            resultBox.innerHTML =
+                                "<span style='color:red'>" + data.error + "</span>";
+                        } else {
+                            resultBox.innerHTML =
+                                "🚗 Predicted Fuel Efficiency: <b>" +
+                                data.prediction + " MPG</b>";
+                        }
+        
+                    })
+                    .catch(error => {
+                        resultBox.innerHTML =
+                            "<span style='color:red'>Server Error!</span>";
+                    });
+        
+                });
+        
+        });
+        </script>
+</body>
+
+</html>
