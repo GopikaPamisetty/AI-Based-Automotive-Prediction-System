@@ -64,6 +64,8 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(200))
 
+with app.app_context():
+    db.create_all()
 @login_manager.user_loader
 def load_user(user_id):
     return db.session.get(User, int(user_id))
@@ -259,6 +261,4 @@ def car_result():
 # Run App
 # ==============================
 if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
     app.run()
