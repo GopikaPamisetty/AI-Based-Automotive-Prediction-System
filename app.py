@@ -250,7 +250,12 @@ def car_result():
 
         prediction = car_model.predict(input_df)
         prediction = float(prediction[0])
+        # ✅ Prevent negative price
+        if prediction < 0:
+            prediction = 0
 
+        prediction = max(prediction, 5000)
+        
         return jsonify({
             "car_price_prediction": round(prediction, 2)
         })
