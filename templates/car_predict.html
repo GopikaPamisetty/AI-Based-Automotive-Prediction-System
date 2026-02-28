@@ -18,49 +18,39 @@
     <style>
 
         
-        /* Make form spacing like Fuel page */
-.form-group {
-    margin-bottom: 1.2rem;
-}
-
-.card-body {
-    padding: 2rem;
-}
-
+        /* Make card fill properly on mobile */
 @media (max-width: 768px) {
 
-    .container {
-        padding-left: 15px;
-        padding-right: 15px;
+    .container-fluid {
+        padding-left: 10px;
+        padding-right: 10px;
     }
 
     .card {
-        margin-top: 20px;
+        margin-top: 15px;
+        border-radius: 12px;
     }
 
     .card-body {
         padding: 20px !important;
     }
 
-    .form-group label {
-        font-size: 14px;
-    }
-
-    .form-control {
-        font-size: 14px;
-        padding: 8px;
+    .form-group {
+        margin-bottom: 1.2rem;
     }
 
     .btn-lg {
-        font-size: 1rem;
-        padding: 10px;
+        width: 100%;
+        padding: 12px;
     }
-
     #prediction {
-        font-size: 16px !important;
+        font-size: 18px;
     }
-    .form-control {
-        border-radius: 6px;
+    
+    @media (max-width: 768px) {
+        #prediction {
+            font-size: 16px;
+        }
     }
 }
         </style>
@@ -103,10 +93,11 @@
         </div>
     </nav>
     
-    <div class="container mt-5">
+
+        <div class="container-fluid mt-4 px-3">
     
         <div class="row justify-content-center">
-            <div class="col-12 col-md-10 col-lg-8">
+            <div class="col-12 col-lg-8 mx-auto">
             
     
                 <div class="card shadow-lg border-0 rounded-lg">
@@ -171,7 +162,7 @@
                         <div class="text-center mt-4">
                             <div id="prediction"
                                  class="p-3 rounded text-white"
-                                 style="background:#343a40; font-size:18px;">
+                                 style="background:#343a40;">
                             </div>
                         </div>
     
