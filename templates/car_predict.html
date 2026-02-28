@@ -17,67 +17,42 @@
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
     <style>
 
-        /* ===== FULL HEIGHT LAYOUT ===== */
-        html, body {
-            height: 100%;
-            margin: 0;
-        }
         
-        body {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        /* This pushes content to fill remaining space below navbar */
-        .page-wrapper {
-            flex: 1;
-            display: flex;
-            align-items: center;       /* Vertical center */
-            justify-content: center;   /* Horizontal center */
-        }
-        
-        /* Card sizing */
-        .card {
-            width: 100%;
-            border-radius: 15px;
-        }
-        
-        /* Prediction text default */
+        /* Make card fill properly on mobile */
+@media (max-width: 768px) {
+
+    .container-fluid {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .card {
+        margin-top: 15px;
+        border-radius: 12px;
+    }
+
+    .card-body {
+        padding: 20px !important;
+    }
+
+    .form-group {
+        margin-bottom: 1.2rem;
+    }
+
+    .btn-lg {
+        width: 100%;
+        padding: 12px;
+    }
+    #prediction {
+        font-size: 18px;
+    }
+    
+    @media (max-width: 768px) {
         #prediction {
-            font-size: 18px;
+            font-size: 16px;
         }
-        
-        /* ===== MOBILE RESPONSIVE ===== */
-        @media (max-width: 768px) {
-        
-            .container-fluid {
-                padding-left: 12px;
-                padding-right: 12px;
-            }
-        
-            .card {
-                margin-top: 10px;
-                border-radius: 12px;
-            }
-        
-            .card-body {
-                padding: 20px !important;
-            }
-        
-            .form-group {
-                margin-bottom: 1.2rem;
-            }
-        
-            .btn-lg {
-                width: 100%;
-                padding: 12px;
-            }
-        
-            #prediction {
-                font-size: 16px;
-            }
-        }
-        
+    }
+}
         </style>
 </head>
 <body style="background: linear-gradient(to right, #141E30, #243B55);">
@@ -119,8 +94,7 @@
     </nav>
     
 
-    <div class="page-wrapper">
-        <div class="container-fluid px-3">
+        <div class="container-fluid mt-4 px-3">
     
         <div class="row justify-content-center">
             <div class="col-12 col-lg-8 mx-auto">
@@ -199,7 +173,6 @@
         </div>
     
     </div>
-</div>
 
 <script>
 
